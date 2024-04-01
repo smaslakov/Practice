@@ -1,0 +1,7 @@
+# ninja log v5
+0	919	1711991521075649983	CMakeFiles/newProject.dir/main.cpp.o	664022d6f109c648
+0	827	1711991520984626847	CMakeFiles/newProject.dir/Card.cpp.o	62fbb1206903e7a7
+1	941	1711991521098201043	CMakeFiles/newProject.dir/Deck.cpp.o	64919085bd5c21b3
+2	967	1711991521126706146	CMakeFiles/newProject.dir/Player.cpp.o	30263a869ecdac8a
+0	1140	1711991521300450893	CMakeFiles/newProject.dir/GameControl.cpp.o	25422b84d2835416
+1140	1218	1711991521379666844	newProject	efd13c83ab49d793
