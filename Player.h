@@ -4,12 +4,10 @@
 #include <string>
 #include <vector>
 #include "Deck.h"
-#include "Card.h"
-#include "Hand.h"
+
 class Player {
 public:
     Deck m_deck;
-    Hand hand;
     Player();
     void SetPlayer(const std::string& name,const Deck& deck);
     const std::string& getName() const;
@@ -18,8 +16,12 @@ public:
     int calculateTotalStrength() const;
     std::vector<Card> m_board;
     bool IsPlayerPassed = false;
-    void ChangeFlagPass();
     Deck getDeck() const;
+    const int StartNumberOfCardsHand = 15;
+    std::vector<Card> cardsInHand;
+    void drawCard(Player player);
+    void removeCardFromHand(int cardIndex);
+    void initializeCardsInHand(Player player);
 private:
     std::string m_name;
 

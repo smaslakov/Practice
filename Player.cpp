@@ -10,9 +10,9 @@ const std::string& Player::getName() const {
 }
 
 void Player::playCard(int cardIndex) {
-    Card playedCard = hand.cardsInHand[cardIndex - 1];
+    Card playedCard = cardsInHand[cardIndex - 1];
     m_board.push_back(playedCard);
-    hand.removeCardFromHand(cardIndex);
+    removeCardFromHand(cardIndex);
 }
 
 void Player::clearBoard() {
@@ -30,7 +30,17 @@ int Player::calculateTotalStrength() const {
 Deck Player::getDeck() const {
     return m_deck;
 }
-
-void Player::ChangeFlagPass() {
-    IsPlayerPassed?IsPlayerPassed = false:IsPlayerPassed = true;
+void Player::drawCard(Player player){
+    const Card& drawnCard = player.m_deck.drawCard();
+    cardsInHand.push_back(drawnCard);
+}
+void Player::removeCardFromHand(int cardIndex){
+    cardsInHand.erase(cardsInHand.begin() + cardIndex);
+}
+void Player::initializeCardsInHand(Player player){
+    int i = 0;
+    while(i < StartNumberOfCardsHand){
+        drawCard(player);
+        i++;
+    }
 }

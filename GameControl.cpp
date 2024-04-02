@@ -4,19 +4,19 @@
 void GameControl::startGame() {
     initializePlayers();
     // Start the game loop
-    bool gameOver = false;
-    while (!gameOver) {
+    while (!isGameOver()) {
         opponent.IsPlayerPassed = false;
         player.IsPlayerPassed = false;
         playRound();
-    // Check for game over condition
-      if(WinInRoundsPlayerCount == 2 || WinInRoundsOpponentCount == 2){
-          gameOver = true;
-      }
     }
     // Print the winner
-    std::cout << ( (WinInRoundsPlayerCount > WinInRoundsOpponentCount)?player.getName():opponent.getName() ) << "wins!!!" << "\n";
-    std::cout << ( (WinInRoundsPlayerCount > WinInRoundsOpponentCount)?WinInRoundsPlayerCount:WinInRoundsOpponentCount )<< ":" << ( (WinInRoundsPlayerCount > WinInRoundsOpponentCount)?WinInRoundsOpponentCount:WinInRoundsPlayerCount );
+    if(WinInRoundsPlayerCount > WinInRoundsOpponentCount){
+        std::cout<<player.getName()<<" wins!!!"<<"\n"<<"\t"<<WinInRoundsPlayerCount<<":"<<WinInRoundsOpponentCount;
+    }else if(WinInRoundsOpponentCount > WinInRoundsPlayerCount){
+        std::cout<<opponent.getName()<<" wins!!!"<<"\n"<<"\t"<<WinInRoundsOpponentCount<<":"<<WinInRoundsPlayerCount;
+    }else{
+        std::cout<<"It`s draw!!!"<<"\n"<<"\t"<<WinInRoundsOpponentCount<<":"<<WinInRoundsPlayerCount;
+    }
 }
 
 void GameControl::initializePlayers() {
@@ -42,14 +42,14 @@ void GameControl::playRound() {
         player.calculateTotalStrength()>opponent.calculateTotalStrength()?++WinInRoundsPlayerCount:++WinInRoundsOpponentCount;
         return;
     }
-    player.hand.initializeCardsInHand();
-    opponent.hand.initializeCardsInHand();
+    player.initializeCardsInHand(player);
+    opponent.initializeCardsInHand(opponent);
     // Each player plays a turn
     while(!opponent.IsPlayerPassed || !player.IsPlayerPassed){
         if(!player.IsPlayerPassed) playTurn(player);
         if(!opponent.IsPlayerPassed) playTurn(opponent);
     }
-    printWinner(player,opponent);
+    printRoundWinner(player,opponent);
     // Clear the board at the end of the round
     player.clearBoard();
     opponent.clearBoard();
@@ -67,7 +67,7 @@ void GameControl::playTurn(Player& player) {
         default:
             break;
     }
-    GameControl::printDeckState(player);
+    GameControl::printHandState(player);
 //PlayCard time
     std::cout<<"Enter the index of card that u want to play:";
     int ind;
@@ -75,7 +75,7 @@ void GameControl::playTurn(Player& player) {
     player.playCard(ind - 1);
 
     // Print the player's hand and board state
-    GameControl::printBoardState(player, m_players[1 - m_currentPlayerIndex]);
+   /* GameControl::printBoardState(player, opponent);
 
     // Play a card from hand
     int cardIndex;
@@ -84,7 +84,7 @@ void GameControl::playTurn(Player& player) {
     player.playCard(cardIndex);
 
     // Print the updated board state
-    GameControl::printBoardState(player, m_players[1 - m_currentPlayerIndex]);
+    GameControl::printBoardState(player,opponent);*/
 }
 
 void GameControl::printBoardState(const Player& player1, const Player& player2)  {
@@ -101,7 +101,7 @@ void GameControl::printBoardState(const Player& player1, const Player& player2) 
     std::cout << std::endl;
 }
 
-void GameControl::printWinner(const Player& player1, const Player& player2){
+void GameControl::printRoundWinner(const Player& player1, const Player& player2){
     int player1Strength = player1.calculateTotalStrength();
     int player2Strength = player2.calculateTotalStrength();
 
@@ -110,17 +110,16 @@ void GameControl::printWinner(const Player& player1, const Player& player2){
         ++WinInRoundsPlayerCount;
     } else if (player2Strength > player1Strength) {
         std::cout << player2.getName() << " wins!" << std::endl;
-        ++WinInRoundsOpponentCount
+        ++WinInRoundsOpponentCount;
     } else {
         std::cout << "It's a draw!" << std::endl;
     }
 }
 
-void GameControl::printDeckState(const Player &player) {
-    std::cout << "-------------------******************------------------- " << player.getName() << "'s Deck ------------" << std::endl;
-    const Deck playerDeck = player.getDeck();
+void GameControl::printHandState(const Player &player) {
+    std::cout << "-------------------******************------------------- " << player.getName() << "'s Hand ------------" << std::endl;
     int counter = 0;
-    for (const Card& card : playerDeck.cardsInDeck) {
+    for (const Card& card : player.cardsInHand) {
         if(counter < 7){
             std::cout << card.getName() << " (" << card.getStrength() << ")\t";
         }
@@ -131,10 +130,9 @@ void GameControl::printDeckState(const Player &player) {
         counter++;
     }
     std::cout << std::endl;
-
 }
 bool GameControl::isGameOver() {
     if(RoundCount == maxRoundsCount) return true;
     if(WinInRoundsPlayerCount == 2 || WinInRoundsOpponentCount == 2) return true;
-
+    else return false;
 }

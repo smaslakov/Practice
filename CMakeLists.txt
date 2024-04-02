@@ -8,5 +8,4 @@ Card.cpp Card.h
 GameControl.cpp GameControl.h
         Deck.cpp
         Player.cpp
-        Hand.h
-        Hand.cpp)
+)
