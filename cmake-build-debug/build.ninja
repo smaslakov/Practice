@@ -79,12 +79,6 @@ build CMakeFiles/newProject.dir/Player.cpp.o: CXX_COMPILER__newProject_unscanned
   OBJECT_DIR = CMakeFiles/newProject.dir
   OBJECT_FILE_DIR = CMakeFiles/newProject.dir
 
-build CMakeFiles/newProject.dir/Hand.cpp.o: CXX_COMPILER__newProject_unscanned_Debug /Users/sagot/Documents/Practice/Hand.cpp || cmake_object_order_depends_target_newProject
-  DEP_FILE = CMakeFiles/newProject.dir/Hand.cpp.o.d
-  FLAGS = -g -std=gnu++17 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -mmacosx-version-min=12.6 -fcolor-diagnostics
-  OBJECT_DIR = CMakeFiles/newProject.dir
-  OBJECT_FILE_DIR = CMakeFiles/newProject.dir
-
 
 # =============================================================================
 # Link build statements for EXECUTABLE target newProject
@@ -93,7 +87,7 @@ build CMakeFiles/newProject.dir/Hand.cpp.o: CXX_COMPILER__newProject_unscanned_D
 #############################################
 # Link the executable newProject
 
-build newProject: CXX_EXECUTABLE_LINKER__newProject_Debug CMakeFiles/newProject.dir/main.cpp.o CMakeFiles/newProject.dir/Card.cpp.o CMakeFiles/newProject.dir/GameControl.cpp.o CMakeFiles/newProject.dir/Deck.cpp.o CMakeFiles/newProject.dir/Player.cpp.o CMakeFiles/newProject.dir/Hand.cpp.o
+build newProject: CXX_EXECUTABLE_LINKER__newProject_Debug CMakeFiles/newProject.dir/main.cpp.o CMakeFiles/newProject.dir/Card.cpp.o CMakeFiles/newProject.dir/GameControl.cpp.o CMakeFiles/newProject.dir/Deck.cpp.o CMakeFiles/newProject.dir/Player.cpp.o
   FLAGS = -g -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -mmacosx-version-min=12.6
   OBJECT_DIR = CMakeFiles/newProject.dir
   POST_BUILD = :
