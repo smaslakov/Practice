@@ -10,13 +10,7 @@ void GameControl::startGame() {
         playRound();
     }
     // Print the winner
-    if(WinInRoundsPlayerCount > WinInRoundsOpponentCount){
-        std::cout<<player.getName()<<" wins!!!"<<"\n"<<"\t"<<WinInRoundsPlayerCount<<":"<<WinInRoundsOpponentCount;
-    }else if(WinInRoundsOpponentCount > WinInRoundsPlayerCount){
-        std::cout<<opponent.getName()<<" wins!!!"<<"\n"<<"\t"<<WinInRoundsOpponentCount<<":"<<WinInRoundsPlayerCount;
-    }else{
-        std::cout<<"It`s draw!!!"<<"\n"<<"\t"<<WinInRoundsOpponentCount<<":"<<WinInRoundsPlayerCount;
-    }
+    printWinner(player, opponent);
 }
 
 void GameControl::initializePlayers() {
@@ -26,8 +20,8 @@ void GameControl::initializePlayers() {
     addCardsToPlayersDeck(playerDeck);
     addCardsToPlayersDeck(opponentDeck);
 
-    player.SetPlayer("Player 1",playerDeck);
-    opponent.SetPlayer("Player 2",opponentDeck);
+    player.SetPlayer("Player 1", playerDeck);
+    opponent.SetPlayer("Player 2", opponentDeck);
 }
 
 void GameControl::addCardsToPlayersDeck(Deck& playerDeck){
@@ -47,7 +41,9 @@ void GameControl::playRound() {
     // Each player plays a turn
     while(!opponent.IsPlayerPassed || !player.IsPlayerPassed){
         if(!player.IsPlayerPassed) playTurn(player);
+        GameControl::printBoardState(player, opponent);
         if(!opponent.IsPlayerPassed) playTurn(opponent);
+        GameControl::printBoardState(player, opponent);
     }
     printRoundWinner(player,opponent);
     // Clear the board at the end of the round
@@ -72,7 +68,10 @@ void GameControl::playTurn(Player& player) {
     std::cout<<"Enter the index of card that u want to play:";
     int ind;
     std::cin>>ind;
-    player.playCard(ind - 1);
+    std::cout<<"Enter the index of field that u want to play card to:";
+    int fieldInd;
+    std::cin >> fieldInd;
+    player.playCard(ind - 1, fieldInd);
 
     // Print the player's hand and board state
    /* GameControl::printBoardState(player, opponent);
@@ -84,18 +83,43 @@ void GameControl::playTurn(Player& player) {
     player.playCard(cardIndex);
 
     // Print the updated board state
-    GameControl::printBoardState(player,opponent);*/
+    */
+
 }
 
 void GameControl::printBoardState(const Player& player1, const Player& player2)  {
     std::cout << "----- " << player1.getName() << "'s Board -----" << std::endl;
-    for (const Card& card : player1.m_board) {
+
+    std::cout << std::endl << "----- " << player1.getName() << "'s 1st field -----" << std::endl;
+
+    for (const Card& card : player1.m_board.field[0]) {
         std::cout << card.getName() << " (" << card.getStrength() << ")\t";
     }
     std::cout << std::endl;
 
+    std::cout << std::endl << "----- " << player1.getName() << "'s 2st field -----" << std::endl;
+
+    for (const Card& card : player1.m_board.field[1]) {
+        std::cout << card.getName() << " (" << card.getStrength() << ")\t";
+    }
+    std::cout << std::endl;
+
+
+
+
+
     std::cout << "----- " << player2.getName() << "'s Board -----" << std::endl;
-    for (const Card& card : player2.m_board) {
+
+    std::cout << std::endl << "----- " << player2.getName() << "'s 1st field -----" << std::endl;
+
+    for (const Card& card : player2.m_board.field[0]) {
+        std::cout << card.getName() << " (" << card.getStrength() << ")\t";
+    }
+    std::cout << std::endl;
+
+    std::cout << std::endl << "----- " << player2.getName() << "'s 2st field -----" << std::endl;
+
+    for (const Card& card : player2.m_board.field[1]) {
         std::cout << card.getName() << " (" << card.getStrength() << ")\t";
     }
     std::cout << std::endl;
@@ -131,8 +155,19 @@ void GameControl::printHandState(const Player &player) {
     }
     std::cout << std::endl;
 }
+
 bool GameControl::isGameOver() {
     if(RoundCount == maxRoundsCount) return true;
     if(WinInRoundsPlayerCount == 2 || WinInRoundsOpponentCount == 2) return true;
     else return false;
+}
+
+void GameControl::printWinner(const Player& player,const Player& opponent){
+    if(WinInRoundsPlayerCount > WinInRoundsOpponentCount){
+        std::cout << player.getName() << " wins!!!" << "\n" << "\t" << WinInRoundsPlayerCount << ":"<<WinInRoundsOpponentCount;
+    }else if(WinInRoundsOpponentCount > WinInRoundsPlayerCount){
+        std::cout<<opponent.getName()<<" wins!!!"<<"\n"<<"\t"<<WinInRoundsOpponentCount<<":"<<WinInRoundsPlayerCount;
+    }else{
+        std::cout<<"It`s draw!!!"<<"\n"<<"\t"<<WinInRoundsOpponentCount<<":"<<WinInRoundsPlayerCount;
+    }
 }

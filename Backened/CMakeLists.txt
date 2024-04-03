@@ -8,4 +8,5 @@ Card.cpp Card.h
 GameControl.cpp GameControl.h
         Deck.cpp
         Player.cpp
+        Field.cpp Field.h
 )

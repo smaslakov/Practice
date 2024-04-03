@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include "Deck.h"
+#include "Field.h"
 
 class Player {
 public:
@@ -11,10 +12,12 @@ public:
     Player();
     void SetPlayer(const std::string& name,const Deck& deck);
     const std::string& getName() const;
-    void playCard(int cardIndex);
+    void playCard(int cardIndex,int fieldIndex);
     void clearBoard();
     int calculateTotalStrength() const;
-    std::vector<Card> m_board;
+
+    Field m_board;
+
     bool IsPlayerPassed = false;
     Deck getDeck() const;
     const int StartNumberOfCardsHand = 15;

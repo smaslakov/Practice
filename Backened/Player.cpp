@@ -9,22 +9,19 @@ const std::string& Player::getName() const {
     return m_name;
 }
 
-void Player::playCard(int cardIndex) {
+void Player::playCard(int cardIndex, int fieldIndex) {
     Card playedCard = cardsInHand[cardIndex - 1];
-    m_board.push_back(playedCard);
+    m_board.field[fieldIndex].push_back(playedCard);
     removeCardFromHand(cardIndex);
 }
 
 void Player::clearBoard() {
-    m_board.clear();
+    m_board.field[0].clear();
+    m_board.field[1].clear();
 }
 
 int Player::calculateTotalStrength() const {
-    int totalStrength = 0;
-    for (const Card& card : m_board) {
-        totalStrength += card.getStrength();
-    }
-    return totalStrength;
+     return m_board.calculateFieldStrength();
 }
 
 Deck Player::getDeck() const {

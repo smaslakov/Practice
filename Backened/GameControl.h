@@ -13,7 +13,7 @@ private:
     Player opponent;
     int WinInRoundsOpponentCount = 0;
     int m_currentPlayerIndex;
-    int maxRoundsCount = 3;
+    const int maxRoundsCount = 3;
     int RoundCount = 0;
     void initializePlayers();
     bool isGameOver();
@@ -21,6 +21,7 @@ private:
     void playTurn(Player& player);
     static void printBoardState(const Player& player1, const Player& player2);
     static void printHandState(const Player& player);
+    void printWinner(const Player& player, const Player& opponent);
     void printRoundWinner(const Player& player1, const Player& player2);
     void addCardsToPlayersDeck(Deck& playerDeck);
 };
